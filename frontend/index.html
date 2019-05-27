@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>嗨聊</title>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+        <link rel="shortcut icon" href="/favicon.ico">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            body{
+                background: #394754
+            }
+            .reg-box{
+                display:none;
+            }
+            .reg-title{
+                width:80%;
+                margin:100px auto;
+                padding-bottom:20px;
+                border-bottom: 1px solid #24323F;
+                font-size:32px;
+                color: #ccc;
+            }
+            .reg-window{
+                width:500px;
+                height:400px;
+                margin:200px auto;
+            }
+            .form-item{
+                margin-top:30px;
+            }
+            .form-item label{
+                color:#fff;
+                margin-right: 10px
+            }
+            .form-input{
+                width:375px;
+                height:30px;
+                padding:5px;
+                border:1px solid #ccc;
+                border-radius:3px;
+                background:#;
+            }
+            #btn-reg{
+                width: 82px;
+                height: 42px;
+                font-size: 18px;
+                margin-top: 50px;
+                margin-left: 6px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                vertical-align: bottom;
+            }
+            .u-head{
+                display: inline-block;
+                width:55px;
+                height:55px;
+                border-radius:50%;
+                overflow:hidden;
+                transition: all .2s;
+                border:2px solid #394754;
+            }
+            .u-head:hover{
+                border-color:green;
+                box-shadow: 0 0 30px 2px rgba(0, 200, 0, .9);
+            }
+            .u-head.active{
+                border-color:green;
+                box-shadow: 0 0 30px 2px rgba(0, 200, 0, .9);
+            }
+            .u-head img{
+                display: block;
+                width:55px;
+                height:55px;
+            }
+            .chat-window{
+                width: 800px;
+                height:600px;
+                margin:100px auto;
+                background: #24323F;
+                box-shadow: 10px 10px 50px 10px rgba(0, 0, 0, .2);
+            }
+            .user-list{
+                display: inline-block;
+                width:200px;
+                height:600px;
+            }
+            .chat-box{
+                display: inline-block;
+                width:595px;
+                height:600px;
+                background:#fff;
+            }
+            .chat-top{
+                float: left;
+                height: 30px;
+                line-height: 30px;
+                width: 585px;
+                border-bottom: 1px solid #ccc;
+                padding-left:10px;
+                padding-top:3px;
+            }
+            .msg-box{
+                width:100%;
+                height:508px;
+                background: #f5f5f5;
+                overflow: auto;
+                float:right;
+            }
+            .tool-box{
+                height:50px;
+                background: #F4F8F9;
+                border-top:1px solid #e5e5e5;
+                border-bottom:1px solid #e5e5e5;
+            }
+            .send-box{
+                width:595px;
+                height:55px;
+            }
+            #editor{
+                display: inline-block;
+                width:495px;
+                height:51px;
+                float:left;
+                padding: 3px 5px;
+                overflow: auto;
+            }
+            [contentEditable=true]:empty:not(:focus):before{
+                content:attr(data-text);
+                color: #ccc;
+            }
+            [contentEditable=true]:empty:before{
+                border: 0;
+            }
+            #btn-send{
+                display: inline-block;
+                width:90px;
+                height:58px;
+                border:1px solid #ccc;
+                float:right;
+                background:#eee;
+                color: #394754;
+                font-weight:bold;
+            }
+
+            .left{
+                float:left;
+                width:90%;
+                margin:10px;
+            }
+            .right{
+                float:right;
+                width:90%;
+                margin:10px;
+            }
+
+            .msg-l img{
+                width:30px;
+                height:30px;
+                border-radius: 50%;
+                overflow: hidden;
+            }
+            .left .msg-l{
+                float:left;
+                width:30px;
+                height:30px;
+                border-radius: 50%;
+                overflow: hidden;
+                margin-right:10px;
+            }
+            .right .msg-l{
+                float:right;
+                width:30px;
+                height:30px;
+                border-radius: 50%;
+                overflow: hidden;
+                margin-left:10px;
+            }
+            .left .msg-r{
+                float:left;
+                max-width:90%;
+                overflow: hidden;
+                max-width: 480px;
+            }
+            .right .msg-r{
+                float:right;
+                overflow: auto;
+                max-width: 480px;
+            }
+            .right .msg-r:after{
+                content:"";
+                display: block;
+                clear:both;
+            }
+            .u-name{
+                font-size:12px;
+                color: #aaa;
+                max-width:200px;
+            }
+            .right .u-name{
+                text-align: right;
+                height:20px;
+                float:right; 
+            }
+            .u-msg{
+                border-radius:5px;
+                background: #fff;
+                padding:5px;
+                font-size:12px; 
+                margin-top:5px;           
+            }
+
+            .right .u-msg{
+                margin-top:20px;           
+            }
+            .chat-window{
+                display:none;
+            }
+
+            @media screen and (max-width: 600px) {
+                .chat-window{
+                    width:100%;
+                    margin: 0 auto
+                }
+                .chat-top{
+                    width: 97%;
+                }
+                .user-list{
+                    display:none;
+                    width:0;
+                }
+                .chat-box{
+                    width:100%;
+                    height:100vh;
+                }
+                .send-box {
+                    width: 100%;
+                    height: 55px;
+                }
+                .msg-box{
+                    height:84vh;
+                }
+                #editor {
+                    width: 80%;
+                    overflow: auto;
+                }
+                #btn-send{
+                    width: 17%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="reg-box">
+            <div class="reg-title">
+                加入嗨聊，一起飞
+            </div>
+            <div class="reg-window">
+                <div class="form-item">
+                    <span class="u-head" data-id="0">
+                        <img src="images/0.jpg" alt="">
+                    </span>
+                    <span class="u-head" data-id="1">
+                        <img src="images/1.jpg" alt="">
+                    </span>
+                    <span class="u-head" data-id="2">
+                        <img src="images/2.jpg" alt="">
+                    </span>
+                    <span class="u-head" data-id="3">
+                        <img src="images/3.jpg" alt="">
+                    </span>
+                    <span class="u-head" data-id="4">
+                        <img src="images/4.jpg" alt="">
+                    </span>
+                    <span class="u-head" data-id="5">
+                        <img src="images/5.jpg" alt="">
+                    </span>
+                    <span class="u-head" data-id="6">
+                        <img src="images/6.jpg" alt="">
+                    </span>
+                    <span class="u-head" data-id="7">
+                        <img src="images/7.jpg" alt="">
+                    </span>
+                    <span class="u-head" data-id="8">
+                        <img src="images/8.jpg" alt="">
+                    </span>
+                    <span class="u-head" data-id="9">
+                        <img src="images/9.jpg" alt="">
+                    </span>
+                    <span class="u-head" data-id="1">
+                        <img src="images/10.jpg" alt="">
+                    </span>
+                    <span class="u-head" data-id="11">
+                        <img src="images/11.jpg" alt="">
+                    </span>
+                    <span class="u-head"  data-id="12">
+                        <img src="images/12.jpg" alt="">
+                    </span>
+                </div>
+                <div class="form-item">
+                    <input class="form-input" type="text" id="uname" placeholder="先给自己取个昵称"><button type="button" id="btn-reg">进入</button>
+                </div>
+            </div>
+        </div>
+        <div class="chat-window">
+            <div class="user-list">
+            </div>
+            <div class="chat-box">
+                <div class="chat-top"></div>
+                <div class="msg-box">
+                </div>
+                <!-- <div class="tool-box"></div> -->
+                <div class="send-box">
+                    <div id="editor" contentEditable=true data-text="在这里输入..."></div>
+                    <button id="btn-send">发送</button>
+                </div>
+            </div>
+        </div>
+
+        <script type='text/javascript' src='/socket.io/socket.io.js' charset='utf-8'></script>
+        <script type='text/javascript' src='/jquery-3.3.1.min.js' charset='utf-8'></script>
+        <script>
+
+            var socket = io.connect();
+
+            alert(socket)
+
+            var nickName;
+            var head;
+
+            var userInfo = localStorage.iChat_nickName;
+
+            if(userInfo){
+                var userInfo = JSON.parse(userInfo)
+                nickName = userInfo.nickName;
+                head = userInfo.head;
+                $(".chat-window").show();
+                $(".chat-top").text(nickName);
+            }else{
+                head = parseInt(Math.random() * 13);
+                $(".reg-box").show();
+            }
+
+            $('[data-id="'+head+'"]').addClass('active');
+
+            $(".u-head").click(function(event) {
+                $(".u-head.active").removeClass('active');
+                $(this).addClass('active');
+            });
+
+            $("#btn-reg").click(function(){
+                var nickName = $("#uname").val();
+                if(nickName == ''){
+                    $("#uname").focus();
+                }else{
+                    localStorage.iChat_nickName = JSON.stringify({nickName: nickName, head: head});
+                    $(".reg-box").hide();
+                    $(".chat-window").show();
+                    $(".chat-top").text(nickName);
+
+                }
+            })
+
+            $("#editor").keydown(function(event) {
+                var key = event.keyCode;
+                if(key == 13){
+                    var msg = $.trim($("#editor").text());
+                    if(msg != ''){
+                        $(".msg-box").append(`<div class="right">
+                            <div class="msg-l">
+                                <img src="/images/${head}.jpg">
+                            </div>
+                            <div class="msg-r">
+                                <div class="u-name">我</div>
+                                <div class="u-msg">${msg}</div>
+                            </div>
+                        </div>`)
+                        socket.emit('postMsg', {'name': nickName, head: head}, msg);
+                        setTimeout(function(){
+                            $("#editor").html('')
+                        },0)
+                    }
+                }
+            });
+            
+            $("#btn-send").click(function(){
+                var msg = $.trim($("#editor").text());
+                if(msg != ''){
+                    $(".msg-box").append(`<div class="right">
+                        <div class="msg-l">
+                            <img src="/images/${head}.jpg">
+                        </div>
+                        <div class="msg-r">
+                            <div class="u-name">我</div>
+                            <div class="u-msg">${msg}</div>
+                        </div>
+                    </div>`)
+                    socket.emit('postMsg', {'name': nickName, head: head}, msg);
+                    $("#editor").text('')
+                }
+            })
+
+            socket.on('newMsg', function(userinfo, msg) {
+                $(".msg-box").append(`<div class="left">
+                    <div class="msg-l">
+                        <img src="/images/${userinfo.head}.jpg">
+                    </div>
+                    <div class="msg-r">
+                        <div class="u-name">${userinfo.name}</div>
+                        <div class="u-msg">${msg}</div>
+                    </div>
+                </div>`)
+            });
+        </script>
+    </body>
+</html>

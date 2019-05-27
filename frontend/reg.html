@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>嗨聊-注册</title>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+        <link rel="shortcut icon" href="/favicon.ico">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            body{
+                background: #394754
+            }
+            .main-box{
+                width:1000px;
+                margin:20px auto;
+            }
+            
+            .reg-title{
+                width:100%;
+                padding-bottom:30px;
+                border-bottom: 1px solid #24323F;
+                font-size:32px;
+            }
+
+            .reg-window{
+                width:500px;
+                height:400px;
+                margin:200px auto;
+            }
+            .form-item{
+                margin-top:30px;
+            }
+            .form-item label{
+                color:#fff;
+                margin-right: 10px
+            }
+            .form-input{
+                width:375px;
+                height:30px;
+                padding:5px;
+                border:1px solid #ccc;
+                border-radius:3px;
+                background:#;
+            }
+            #btn-reg{
+                width: 250px;
+                height: 40px;
+                font-size: 18px;
+                margin-top: 50px;
+                margin-left: 46px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+            }
+            .footer{
+                width:100%;
+                position: fixed;
+                left:0;
+                bottom: 0;
+                border-top: 1px solid #555;
+                padding:10px;
+                text-align: center;
+                font-size: 12px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main-box">
+            <div class="reg-title">
+                加入嗨聊，一起飞
+            </div>
+            <div class="reg-window">
+                <div class="form-item">
+                    <label>姓名</label>
+                    <input class="form-input" type="text" id="uname" name="">
+                </div>
+                <div class="form-item">
+                    <label>密码</label>
+                    <input class="form-input" type="text" id="upwd" name="">
+                </div>
+                <div class="form-item">
+                    <label>性别：</label>
+                    <label><input type="radio" name="sex" value="1" checked="checked">男</label>
+                    <label><input type="radio" name="sex" value="2">女</label>
+                </div>
+
+                <div class="text-center">
+                    <button id="btn-reg">注册</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            广东智创科技有限公司 2018-7
+        </div>
+
+        <script type='text/javascript' src='jquery-3.3.1.min.js' charset='utf-8'></script>
+        <script>
+            $("#btn-reg").click(function(){
+                var uname = $("#uname").val();
+                var upwd = $("#upwd").val();
+                var sex = $("[name='sex']:checked").val();
+                $.ajax({
+                    type: 'post',
+                    url: '/reg',
+                    data: {
+                        uname: uname,
+                        upwd: upwd,
+                        sex: sex
+                    },
+                    success:function(e){
+                        if(e.code == 200){
+                            location.href = "login.html";
+                        }
+                    }
+                })
+            })
+        </script>
+    </body>
+</html>
