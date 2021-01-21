@@ -19,6 +19,6 @@
     "express-session": "^1.15.6",
     "moment": "^2.22.2",
     "mysql": "^2.16.0",
-    "socket.io": "0.9.x"
+    "socket.io": "2.4.x"
   }
 }
